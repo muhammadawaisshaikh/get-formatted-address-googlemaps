@@ -1,0 +1,34 @@
+function areaAcknowledge(pickuplat, pickuplong, dropofflat, dropofflong, value){
+        // adding locations of map
+        var mapdivname = "map" + value.gigId;
+        var mapdiv = document.getElementById(mapdivname);
+
+        // getting pickup
+          $.ajax({
+            url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+pickuplat+','+pickuplong+'&sensor=true&key=YOUR_API_KEY',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // debugger;
+                var pickupLocation = data.results[0].formatted_address;
+                mapdiv.innerHTML += '<div id="map-pickupLocation">'+ pickupLocation +'</div>';
+                // console.log(data.results[0].formatted_address);
+            },
+            error: function (error, message, request) { console.log(error); }
+        });
+
+        // getting dropoff
+        $.ajax({
+            url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+dropofflat+','+dropofflong+'&sensor=true&key=YOUR_API_KEY',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // debugger;
+                var dropoffLocation = data.results[0].formatted_address;
+                mapdiv.innerHTML += '<div id="map-dropoffLocation">'+ dropoffLocation +'</div>';
+                // console.log(data.results[0].formatted_address);
+            },
+            error: function (error, message, request) { console.log(error); }
+        });
+
+    }
